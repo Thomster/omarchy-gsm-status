@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "gsm-status",
+  "name": "GSM Status",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "description": "Mobile broadband (GSM) signal, mode, and connect/disconnect toggle. Hides itself when no modem is present.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "GSM Status",
+    "description": "Mobile broadband (GSM) signal, mode, and connect/disconnect toggle. Hides itself when no modem is present.",
+    "category": "Network",
+    "allowMultiple": false
+  }
+}
