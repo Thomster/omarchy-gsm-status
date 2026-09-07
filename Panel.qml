@@ -10,11 +10,17 @@ Panel {
   id: root
   moduleName: "gsm-status"
   ipcTarget: "gsm-status"
-  // The bar host sizes each widget's slot from this -- without it the icon
-  // renders with zero width and never actually shows up, even though nothing
-  // errors. Collapses to 0 when no modem is present, so the widget takes no
-  // space at all rather than showing an empty slot.
-  implicitWidth: gsmDevicePresent ? button.implicitWidth : 0
+  // The bar host sizes each widget's slot from this. It only picks up the
+  // value once, early -- it does not re-flow the slot if implicitWidth
+  // changes later (which it otherwise would, since gsmDevicePresent starts
+  // false until the first async nmcli/mmcli poll resolves a few seconds
+  // after load). So this stays unconditional rather than collapsing to 0
+  // when no modem is present -- the widget is opt-in via shell.json anyway
+  // (disable it there, or with `omarchy plugin disable gsm-status`, if you
+  // don't have a modem), matching how every other bar icon on this shell
+  // works.
+  implicitWidth: button.implicitWidth
+  implicitHeight: button.implicitHeight
 
   // GSM has no Quickshell.Networking device type, so its state is polled
   // straight from nmcli/mmcli. gsmDeviceState mirrors `nmcli device status`'s
@@ -144,7 +150,10 @@ Panel {
     anchors.fill: parent
     bar: root.bar
     text: root.icon
-    visible: root.gsmDevicePresent
+    // Always visible (see the implicitWidth comment above for why) -- dimmed
+    // rather than hidden when no modem is present, so an install on a
+    // machine without one reads as "no modem" instead of an unexplained gap.
+    opacity: root.gsmDevicePresent ? 1.0 : 0.35
 
     onPressed: function(b) {
       if (root.opened) root.close()
