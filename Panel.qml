@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Io
+import Quickshell.Networking
 import qs.Ui
 import qs.Commons
 import "Model.js" as Model
@@ -36,6 +37,25 @@ Panel {
   readonly property bool gsmConnected: gsmDeviceState === "connected"
   readonly property bool canToggleGsm: gsmDevicePresent && gsmConnectionName !== ""
   readonly property string gsmToggleHint: gsmConnected ? "Turn mobile data off" : "Turn mobile data on"
+
+  // GSM is the lowest-priority interface: it defers to Wi-Fi (and, via the
+  // separate omarchy-network-priority service if installed, to Ethernet).
+  // This is a continuously held invariant, not a one-shot reaction, for the
+  // same reason the Ethernet rule is: GSM connection profiles are typically
+  // autoconnect=yes, so ModemManager/NetworkManager can bring GSM back up on
+  // its own with nothing else changing. Watching Wi-Fi's live radio state and
+  // GSM's own polled state, rather than a derived summary, means either one
+  // flipping on re-triggers this. Self-contained: doesn't require
+  // network-priority to be installed, and composes fine if it is (Ethernet
+  // going up there already drops Wi-Fi, which in turn drops GSM here).
+  readonly property bool wifiRadioOn: Networking.wifiEnabled
+
+  function enforceWifiOverGsm() {
+    if (wifiRadioOn && gsmConnected) toggleGsm()
+  }
+
+  onWifiRadioOnChanged: enforceWifiOverGsm()
+  onGsmConnectedChanged: enforceWifiOverGsm()
 
   property real gsmSignalPercent: -1
   property string gsmAccessTech: ""
