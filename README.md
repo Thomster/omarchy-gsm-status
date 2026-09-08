@@ -27,6 +27,15 @@ Pairs well with [omarchy-network-priority](https://github.com/Thomster/omarchy-n
 (auto-disables GSM/Wi-Fi whenever Ethernet is connected), but neither
 depends on the other — this widget works standalone.
 
+## How this came to be
+
+This is a personal customization for my own Omarchy setup, built with the
+help of [Claude Code](https://claude.com/claude-code) (Anthropic's AI coding
+agent). I use it daily on my own machine, but I'm not a professional plugin
+developer — please read through the source before installing, especially
+anything that touches system or network state, and open an issue if
+something looks off.
+
 ## License
 
 MIT
