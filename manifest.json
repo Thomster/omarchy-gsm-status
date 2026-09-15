@@ -15,6 +15,7 @@
     "displayName": "GSM Status",
     "description": "Mobile broadband (GSM) signal, mode, and connect/disconnect toggle. Hides itself when no modem is present.",
     "category": "Network",
-    "allowMultiple": false
+    "allowMultiple": false,
+    "defaultSection": "right"
   }
 }

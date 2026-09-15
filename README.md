@@ -9,6 +9,9 @@ Omarchy's stock network panel doesn't support GSM at all — there's no
 `mmcli` directly. The bar icon hides itself entirely when no modem is
 present, so it's safe to install even on a machine without one.
 
+Defaults into the bar's right section, next to the network dropdown, since
+it's another radio status indicator.
+
 ## Install
 
 ```
