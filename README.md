@@ -30,6 +30,10 @@ Pairs well with [omarchy-network-priority](https://github.com/Thomster/omarchy-n
 (auto-disables GSM/Wi-Fi whenever Ethernet is connected), but neither
 depends on the other — this widget works standalone.
 
+## Changelog
+
+Current version: **1.2.1**. See [CHANGELOG.md](CHANGELOG.md).
+
 ## How this came to be
 
 This is a personal customization for my own Omarchy setup, built with the
